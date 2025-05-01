@@ -1,42 +1,64 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
-    <meta name="description" content="">
+    <title>Jaden's Plane Gallery</title>
+    <meta name="description" content="Aviation and aircraft gallery showcasing planes from around the world">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
     <link href="Style1forwebsite.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   </head>
   <body>
-    <!--[if lt IE 7]>
-    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
     <header>
-      <div id = 'logo'></div>
-      <img src = "images/logo.gif" width="600" height="300" alt = "logo">
-    </div>
+      <div id="logo">
+        <img src="images/logo.png" width="150" height="150" alt="logo">
+      </div>
       <nav>
         <ul>
-          <li><a href="index.html"> Home </a></li>
-          <li><a href="course.html"> Courses </a></li>
-          <li><a href="about.html"> About Us </a></li>
-          <li><a href="student.html"> Students </a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="aircraft.html">Aircraft</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
     </header>
-      <content>
-        This is a home page! <strong>Welcome!!!</strong>
-      </content>
-      <hr>
-      <footer>
-        Created by Jaden
-      </footer>
-      <script src="" async defer></script>
+    
+    <main>
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1 class="hero-title">Jaden's Plane Gallery</h1>
+          <p class="hero-subtitle">Where Engineering Meets the Sky</p>
+        </div>
+      </section>
+    
+      <!-- Welcome Section -->
+      <section class="welcome-section fade-in">
+        <h2>Welcome Aboard!</h2>
+        <p class="intro-text">Explore the marvels of modern aviation through our curated collection...</p>
+      </section>
+    
+      <!-- Video Section -->
+      <section class="video-section">
+        <div class="video-container">
+          <video class="featured-video" controls poster="images/video-thumbnail.jpg">
+            <source src="images/B777-landings.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="video-overlay">
+            <h3>Featured Landing Sequence</h3>
+            <p>B777 at LAX International</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    
+    <footer>
+      Created by Jaden
+    </footer>
+    
+    <script src="scripts.js"></script>
   </body>  
 </html>
