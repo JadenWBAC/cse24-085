@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Contact - Jaden's Plane Gallery</title>
+    <meta name="description" content="Contact us about our aviation gallery">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="Style1forwebsite.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  </head>
+  <body>
+    <header>
+      <div id="logo">
+        <img src="images/logo.png" width="150" height="150" alt="logo">
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="aircraft.html">Aircraft</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+    <main>
+      <section class="contact-section">
+        <div class="contact-container">
+          <div class="contact-info">
+            <h2>Get in Touch</h2>
+            <div class="info-card">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>911 Foxtrot Way<br>Bravo City, BC 45678</p>
+            </div>
+            <div class="info-card">
+              <i class="fas fa-phone"></i>
+              <p>+267 74 803 888</p>
+            </div>
+          </div>
+<form class="contact-form slide-in">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" id="name" required minlength="2" pattern="[A-Za-z\s]+" title="Please enter a valid name (letters and spaces only)">
+    <span class="focus-border"></span>
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" id="email" required placeholder="you@example.com">
+    <span class="focus-border"></span>
+  </div>
+  <div class="form-group">
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" pattern="[0-9+\s\-()]{7,}" title="Please enter a valid phone number">
+    <span class="focus-border"></span>
+  </div>
+  <div class="form-group">
+    <label for="subject">Subject</label>
+    <select id="subject" required>
+      <option value="" disabled selected>Please select a subject</option>
+      <option value="general">General Inquiry</option>
+      <option value="feedback">Website Feedback</option>
+      <option value="collaboration">Collaboration</option>
+      <option value="other">Other</option>
+    </select>
+    <span class="focus-border"></span>
+  </div>
+  <div class="form-group">
+    <label for="message">Message</label>
+    <textarea id="message" rows="5" required minlength="10" maxlength="500"></textarea>
+    <span class="focus-border"></span>
+  </div>
+  <button type="submit" class="submit-btn">
+    <span>Send Message</span>
+    <i class="fas fa-paper-plane"></i>
+  </button>
+</form>
+        </div>
+      </section>
+    </main>
+    
+    <footer>
+      Created by Jaden
+    </footer>
+    
+    <script src="scripts.js"></script>
+  </body>  
+</html>
