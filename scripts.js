@@ -22,13 +22,53 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       });
 
-      // Add click effect to gallery items
-      item.addEventListener('click', function() {
-        this.classList.toggle('zoomed');
-        if (this.classList.contains('zoomed')) {
+      // Improved click effect for gallery items
+      item.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent event bubbling
+        
+        if (!this.classList.contains('zoomed')) {
+          // Create overlay for better viewing experience
+          const overlay = document.createElement('div');
+          overlay.className = 'gallery-overlay';
+          document.body.appendChild(overlay);
+          
+          // Create zoomed container
+          const zoomedContainer = document.createElement('div');
+          zoomedContainer.className = 'zoomed-container';
+          
+          // Clone the image for zooming
+          const img = this.querySelector('img').cloneNode(true);
+          
+          // Add caption if it exists
+          const caption = this.querySelector('.image-caption');
+          const captionClone = caption ? caption.cloneNode(true) : null;
+          if (captionClone) {
+            captionClone.style.opacity = '1';
+          }
+          
+          // Add close button
+          const closeBtn = document.createElement('button');
+          closeBtn.className = 'zoom-close-btn';
+          closeBtn.innerHTML = '&times;';
+          
+          // Add elements to zoomed container
+          zoomedContainer.appendChild(img);
+          if (captionClone) zoomedContainer.appendChild(captionClone);
+          zoomedContainer.appendChild(closeBtn);
+          
+          // Append to body
+          document.body.appendChild(zoomedContainer);
           document.body.style.overflow = 'hidden';
-        } else {
-          document.body.style.overflow = 'auto';
+          
+          // Handle close button click
+          closeBtn.addEventListener('click', removeZoom);
+          overlay.addEventListener('click', removeZoom);
+          
+          function removeZoom() {
+            zoomedContainer.remove();
+            overlay.remove();
+            document.body.style.overflow = 'auto';
+          }
         }
       });
     });
@@ -48,14 +88,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Aircraft Card Interactions
+  // Aircraft Card Interactions - Fixed to prevent navigation glitch
   const infoBtns = document.querySelectorAll('.info-btn');
   if (infoBtns.length > 0) {
     infoBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent default behavior
+        e.stopPropagation(); // Prevent event bubbling
+        
         const card = e.target.closest('.aircraft-card');
         card.classList.toggle('expanded');
       });
+    });
+  }
+  
+  // Ensure nav links don't have hover issues
+  const navLinks = document.querySelectorAll('nav a');
+  if (navLinks.length > 0) {
+    navLinks.forEach(link => {
+      // Remove any existing event listeners that might cause issues
+      const newLink = link.cloneNode(true);
+      link.parentNode.replaceChild(newLink, link);
     });
   }
 });
