@@ -1,33 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Gallery hover effect
+  // Gallery hover effect - without blur
   const galleryItems = document.querySelectorAll('.gallery-item');
   let isZoomed = false; // Track if any image is currently zoomed
   
   if (galleryItems.length > 0) {
     galleryItems.forEach(item => {
-      item.addEventListener('mouseenter', function() {
-        // Only apply hover effects if no image is zoomed
-        if (!isZoomed) {
-          // Add blur to all other items
-          galleryItems.forEach(otherItem => {
-            if (otherItem !== this) {
-              otherItem.style.filter = 'blur(5px)';
-              otherItem.style.opacity = '0.7';
-            }
-          });
-        }
-      });
-
-      item.addEventListener('mouseleave', function() {
-        // Only remove effects if no image is zoomed
-        if (!isZoomed) {
-          // Remove blur from all items
-          galleryItems.forEach(otherItem => {
-            otherItem.style.filter = 'none';
-            otherItem.style.opacity = '1';
-          });
-        }
-      });
+      // Remove the mouseenter/mouseleave blur effects
+      // We'll keep the basic hover scaling from CSS
 
       // Improved click effect for gallery items
       item.addEventListener('click', function(e) {
@@ -70,9 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
           document.body.appendChild(zoomedContainer);
           document.body.style.overflow = 'hidden';
           
-          // Make all gallery items non-interactive while zoomed
-          galleryItems.forEach(item => {
-            item.style.pointerEvents = 'none';
+          // Apply blur to all gallery items when in fullscreen mode
+          galleryItems.forEach(otherItem => {
+            otherItem.style.filter = 'blur(5px)';
+            otherItem.style.opacity = '0.7';
+            otherItem.style.pointerEvents = 'none';
           });
           
           // Handle close button click
@@ -85,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.style.overflow = 'auto';
             isZoomed = false; // Reset zoomed state
             
-            // Restore interactivity to gallery items
+            // Restore interactivity and appearance to gallery items
             galleryItems.forEach(item => {
               item.style.pointerEvents = 'auto';
               item.style.filter = 'none';
