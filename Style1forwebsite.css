@@ -553,3 +553,121 @@ body {
     }
   }
 </style>
+
+/* Gallery Zoom Enhancement Styles */
+
+.gallery-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.zoomed-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.zoomed-container img {
+  max-width: 90vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 5px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+}
+
+.zoomed-container .image-caption {
+  background: rgba(0, 51, 102, 0.9);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 0 0 5px 5px;
+  width: 100%;
+  text-align: center;
+  margin-top: 0;
+  position: relative;
+}
+
+.zoom-close-btn {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: rgba(0, 51, 102, 0.8);
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.zoom-close-btn:hover {
+  background: var(--hover-color);
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+/* Fix for Aircraft Cards Nav Issues */
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 51, 102, 0.8);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* This fixes hover issues */
+}
+
+.info-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  color: var(--primary-color);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  pointer-events: auto; /* Enable the button to be clickable */
+}
+
+.aircraft-card {
+  position: relative; /* Ensure position context for absolute elements */
+}
+
+/* Animation for zoom effect */
+@keyframes zoomIn {
+  from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+  to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.zoomed-container {
+  animation: zoomIn 0.3s ease forwards;
+}
