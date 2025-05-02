@@ -1,32 +1,42 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Gallery hover effect
   const galleryItems = document.querySelectorAll('.gallery-item');
+  let isZoomed = false; // Track if any image is currently zoomed
   
   if (galleryItems.length > 0) {
     galleryItems.forEach(item => {
       item.addEventListener('mouseenter', function() {
-        // Add blur to all other items
-        galleryItems.forEach(otherItem => {
-          if (otherItem !== this) {
-            otherItem.style.filter = 'blur(5px)';
-            otherItem.style.opacity = '0.7';
-          }
-        });
+        // Only apply hover effects if no image is zoomed
+        if (!isZoomed) {
+          // Add blur to all other items
+          galleryItems.forEach(otherItem => {
+            if (otherItem !== this) {
+              otherItem.style.filter = 'blur(5px)';
+              otherItem.style.opacity = '0.7';
+            }
+          });
+        }
       });
 
       item.addEventListener('mouseleave', function() {
-        // Remove blur from all items
-        galleryItems.forEach(otherItem => {
-          otherItem.style.filter = 'none';
-          otherItem.style.opacity = '1';
-        });
+        // Only remove effects if no image is zoomed
+        if (!isZoomed) {
+          // Remove blur from all items
+          galleryItems.forEach(otherItem => {
+            otherItem.style.filter = 'none';
+            otherItem.style.opacity = '1';
+          });
+        }
       });
 
       // Improved click effect for gallery items
       item.addEventListener('click', function(e) {
         e.stopPropagation(); // Prevent event bubbling
         
-        if (!this.classList.contains('zoomed')) {
+        // Only allow zooming if no other image is currently zoomed
+        if (!isZoomed) {
+          isZoomed = true; // Set zoomed state to true
+          
           // Create overlay for better viewing experience
           const overlay = document.createElement('div');
           overlay.className = 'gallery-overlay';
@@ -60,6 +70,11 @@ document.addEventListener('DOMContentLoaded', function() {
           document.body.appendChild(zoomedContainer);
           document.body.style.overflow = 'hidden';
           
+          // Make all gallery items non-interactive while zoomed
+          galleryItems.forEach(item => {
+            item.style.pointerEvents = 'none';
+          });
+          
           // Handle close button click
           closeBtn.addEventListener('click', removeZoom);
           overlay.addEventListener('click', removeZoom);
@@ -68,6 +83,14 @@ document.addEventListener('DOMContentLoaded', function() {
             zoomedContainer.remove();
             overlay.remove();
             document.body.style.overflow = 'auto';
+            isZoomed = false; // Reset zoomed state
+            
+            // Restore interactivity to gallery items
+            galleryItems.forEach(item => {
+              item.style.pointerEvents = 'auto';
+              item.style.filter = 'none';
+              item.style.opacity = '1';
+            });
           }
         }
       });
