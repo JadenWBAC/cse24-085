@@ -115,6 +115,43 @@ document.addEventListener('DOMContentLoaded', function() {
       link.parentNode.replaceChild(newLink, link);
     });
   }
+  
+  // NEW: Handle featured video overlay
+  const featuredVideo = document.getElementById('featured-video');
+  const videoOverlay = document.getElementById('video-overlay');
+  
+  if (featuredVideo && videoOverlay) {
+    // Hide overlay when video plays
+    featuredVideo.addEventListener('play', function() {
+      videoOverlay.style.opacity = '0';
+      videoOverlay.style.pointerEvents = 'none';
+    });
+    
+    // Show overlay when video is paused
+    featuredVideo.addEventListener('pause', function() {
+      videoOverlay.style.opacity = '1';
+      videoOverlay.style.pointerEvents = 'auto';
+    });
+    
+    // Show overlay when video ends
+    featuredVideo.addEventListener('ended', function() {
+      videoOverlay.style.opacity = '1';
+      videoOverlay.style.pointerEvents = 'auto';
+    });
+  }
+  
+  // NEW: Handle hero background video
+  const heroVideo = document.querySelector('.hero-video');
+  if (heroVideo) {
+    // Ensure video plays automatically
+    heroVideo.play().catch(error => {
+      console.log('Auto-play prevented:', error);
+      // Fallback for browsers that block autoplay
+      const playPromise = document.addEventListener('click', () => {
+        heroVideo.play();
+      }, { once: true });
+    });
+  }
 });
 
 function validateForm() {
@@ -136,19 +173,7 @@ function showSuccessMessage(form) {
   }, 3000);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Image loading optimization
-  lazyLoadImages();
-  
-  // Gallery hover effect - without blur
-  initializeGallery();
-  
-  // Form Validation
-  initializeForm();
-  
-  // Aircraft Card External Links (don't need event listeners anymore as we're using <a> tags)
-});
-
+// Rest of your existing functions...
 function lazyLoadImages() {
   // Select all images that should be lazy loaded (gallery and aircraft images)
   const images = document.querySelectorAll('.gallery-item img, .card-image img');
@@ -283,41 +308,6 @@ function initializeForm() {
   }
 }
 
-function validateForm() {
-  // Basic validation
-  const name = document.getElementById('name');
-  const email = document.getElementById('email');
-  const message = document.getElementById('message');
-  
-  let isValid = true;
-  
-  // Check name
-  if (name && (!name.value.trim() || name.value.length < 2)) {
-    markInvalid(name);
-    isValid = false;
-  } else if (name) {
-    markValid(name);
-  }
-  
-  // Check email
-  if (email && (!email.value.trim() || !isValidEmail(email.value))) {
-    markInvalid(email);
-    isValid = false;
-  } else if (email) {
-    markValid(email);
-  }
-  
-  // Check message
-  if (message && (!message.value.trim() || message.value.length < 10)) {
-    markInvalid(message);
-    isValid = false;
-  } else if (message) {
-    markValid(message);
-  }
-  
-  return isValid;
-}
-
 function markInvalid(element) {
   element.style.borderColor = '#ff3860';
   element.parentElement.querySelector('.focus-border').style.backgroundColor = '#ff3860';
@@ -331,18 +321,4 @@ function markValid(element) {
 function isValidEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
-}
-
-function showSuccessMessage(form) {
-  const successDiv = document.createElement('div');
-  successDiv.className = 'success-message';
-  successDiv.innerHTML = `
-    <i class="fas fa-check-circle"></i>
-    <p>Message sent successfully!</p>
-  `;
-  form.parentNode.insertBefore(successDiv, form.nextSibling);
-  
-  setTimeout(() => {
-    successDiv.remove();
-  }, 3000);
 }

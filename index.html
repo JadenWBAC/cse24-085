@@ -28,6 +28,13 @@
     <main>
       <!-- Hero Section -->
       <section class="hero">
+        <!-- Background Video -->
+        <div class="hero-background">
+          <video autoplay loop muted playsinline class="hero-video">
+            <source src="images/takeoff.mp4" type="video/mp4">
+          </video>
+          <div class="hero-overlay"></div>
+        </div>
         <div class="hero-content">
           <h1 class="hero-title">Jaden's Plane Gallery</h1>
           <p class="hero-subtitle">Where Engineering Meets the Sky</p>
@@ -43,11 +50,11 @@
       <!-- Video Section -->
       <section class="video-section">
         <div class="video-container">
-          <video class="featured-video" controls poster="images/video-thumbnail.jpg">
+          <video id="featured-video" class="featured-video" controls poster="images/video-thumbnail.jpg">
             <source src="images/B777-landings.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
-          <div class="video-overlay">
+          <div id="video-overlay" class="video-overlay">
             <h3>Featured Landing Sequence</h3>
             <p>B777 at LAX International</p>
           </div>
