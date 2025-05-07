@@ -737,3 +737,236 @@ video {
     grid-template-columns: 1fr;
   }
 }
+
+/* Contact Section with Background Video */
+.contact-section {
+  position: relative;
+  padding: 40px 20px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Background video container */
+.section-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Video styling */
+.section-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translateX(-50%) translateY(-50%);
+  object-fit: cover;
+}
+
+/* Overlay for better text contrast */
+.section-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 51, 102, 0.8);
+}
+
+/* Ensure the contact container stands out against the video */
+.contact-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  z-index: 2;
+}
+
+/* Make the contact info and form more visible on the video background */
+.contact-info h2 {
+  color: #ffffff;
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+.contact-info h2.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.contact-form {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-info h2 {
+    text-align: center;
+  }
+  
+  .section-overlay {
+    background: rgba(0, 51, 102, 0.85); /* Slightly darker for better text contrast on mobile */
+  }
+}
+
+/* About Section with Background Image */
+.about-section {
+  position: relative;
+  padding: 40px 20px;
+  overflow: hidden;
+  z-index: 1;
+  color: var(--text-dark);
+}
+
+/* Section title styling */
+.section-title {
+  text-align: center;
+  color: white;
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 2;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+.section-title.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Background image container */
+.about-section .section-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Image styling */
+.about-section .section-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('images/sky_background.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Overlay for better text contrast */
+.about-section .section-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 51, 102, 0.8);
+}
+
+/* Make content more visible on the image background */
+.about-section .about-content {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  margin-bottom: 40px;
+}
+
+.about-section .stats-section,
+.about-section .testimonials,
+.about-section .join-community {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
+}
+
+/* Enhanced styling for testimonials */
+.about-section .testimonial-card {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Enhanced styling for founder image */
+.founder-image {
+  text-align: center;
+}
+
+.founder-image img {
+  border-radius: 10px;
+  max-width: 100%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.founder-image img:hover {
+  transform: scale(1.05);
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+  .about-section {
+    padding: 30px 15px;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  
+  .about-section .section-overlay {
+    background: rgba(0, 51, 102, 0.85); /* Slightly darker for better text contrast on mobile */
+  }
+  
+  .about-content {
+    padding: 15px;
+  }
+  
+  .stats-section, 
+  .testimonials, 
+  .join-community {
+    padding: 15px;
+  }
+}
