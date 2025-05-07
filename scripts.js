@@ -357,3 +357,58 @@ function lazyLoadImages() {
     });
   }
 }
+
+/**
+ * Update to the document.addEventListener DOMContentLoaded function
+ * to include the new initializeAboutPage function
+ */
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize all components
+  initializeHero();
+  initializeGallery();
+  initializeVideoOverlay();
+  initializeAircraftCards();
+  initializeContactForm();
+  initializeAboutPage(); // Add this line
+  lazyLoadImages();
+});
+
+/**
+ * About Page Initialization
+ * Handles fade-in animations for the about page
+ */
+function initializeAboutPage() {
+  // Get the section title element
+  const sectionTitle = document.querySelector('.section-title');
+  
+  // If we're on the about page (section title exists)
+  if (sectionTitle) {
+    // Add fade-in class after a short delay
+    setTimeout(() => {
+      sectionTitle.classList.add('fade-in');
+    }, 300);
+    
+    // Animate content sections when they scroll into view
+    const animateOnScroll = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+          observer.unobserve(entry.target); // Stop observing once animation is triggered
+        }
+      });
+    };
+    
+    // Create intersection observer
+    const observer = new IntersectionObserver(animateOnScroll, {
+      root: null,
+      threshold: 0.2, // Trigger when 20% of element is visible
+      rootMargin: '0px'
+    });
+    
+    // Observe all sections that should animate
+    const sections = document.querySelectorAll('.about-content, .stats-section, .testimonials, .join-community');
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  }
+}
