@@ -8,6 +8,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="Style1forwebsite.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Preconnect to CDN -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <!-- Preload critical assets -->
+    <link rel="preload" href="images/logo.png" as="image">
+    <link rel="preload" href="images/takeoff.mp4" as="video" type="video/mp4">
+    <style>
+      /* Critical CSS for fade-in animations */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .hero-content {
+        opacity: 0;
+      }
+      .hero-content.fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+      }
+      .video-play-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0,0,0,0.6);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 2;
+        transition: all 0.3s;
+      }
+      .video-play-btn:hover {
+        background: rgba(0,0,0,0.8);
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -30,7 +68,8 @@
       <section class="hero">
         <!-- Background Video -->
         <div class="hero-background">
-          <video autoplay loop muted playsinline class="hero-video">
+          <!-- Poster image for the video to improve perceived loading speed -->
+          <video autoplay loop muted playsinline class="hero-video" poster="images/video-thumbnail.jpg">
             <source src="images/takeoff.mp4" type="video/mp4">
           </video>
           <div class="hero-overlay"></div>
@@ -50,7 +89,8 @@
       <!-- Video Section -->
       <section class="video-section">
         <div class="video-container">
-          <video id="featured-video" class="featured-video" controls poster="images/video-thumbnail.jpg">
+          <!-- Added loading="lazy" to defer video loading -->
+          <video id="featured-video" class="featured-video" controls poster="images/video-thumbnail.jpg" preload="none" loading="lazy">
             <source src="images/B777-landings.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
@@ -67,5 +107,26 @@
     </footer>
     
     <script src="scripts.js"></script>
+    <script>
+      // Fallback for browsers that block autoplay
+      document.addEventListener('DOMContentLoaded', function() {
+        const heroVideo = document.querySelector('.hero-video');
+        if (heroVideo) {
+          // Check if video is paused after attempting to autoplay
+          setTimeout(() => {
+            if (heroVideo.paused) {
+              const playButton = document.createElement('button');
+              playButton.className = 'video-play-btn';
+              playButton.innerHTML = '<i class="fas fa-play"></i>';
+              playButton.addEventListener('click', () => {
+                heroVideo.play();
+                playButton.remove();
+              });
+              heroVideo.parentNode.appendChild(playButton);
+            }
+          }, 500);
+        }
+      });
+    </script>
   </body>  
 </html>
