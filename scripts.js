@@ -314,9 +314,27 @@ function showSuccessMessage(form) {
 
 /**
  * Lazy Load Images with Intersection Observer
+ * Enhanced to handle gallery items even without data-src attributes
  */
 function lazyLoadImages() {
-  // Select all images that should be lazy loaded
+  // First, convert standard gallery images to use data-src if not already
+  // This helps with gallery.html where images are loaded directly
+  const galleryImages = document.querySelectorAll('.gallery-item img:not([data-src])');
+  if (galleryImages.length > 0) {
+    galleryImages.forEach(img => {
+      // Only process images that are not in the first visible batch (approx. first 4-6 images)
+      if (!isInInitialViewport(img)) {
+        // Store original src
+        img.dataset.src = img.src;
+        // Replace with a lightweight placeholder or blank
+        img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1"%3E%3C/svg%3E';
+        // Add lazy-load class for styling
+        img.classList.add('lazy-load');
+      }
+    });
+  }
+
+  // Now handle all images with data-src attribute
   const images = document.querySelectorAll('img[data-src]');
   
   if (images.length === 0) return;
@@ -328,19 +346,22 @@ function lazyLoadImages() {
           const img = entry.target;
           
           if (img.dataset.src) {
-            img.src = img.dataset.src;
-            img.removeAttribute('data-src');
-            
-            img.addEventListener('load', () => {
+            // Create an image object to preload
+            const tempImg = new Image();
+            tempImg.onload = () => {
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
               img.classList.add('loaded');
-            }, { once: true });
+              img.classList.remove('lazy-load');
+            };
+            tempImg.src = img.dataset.src;
           }
           
           observer.unobserve(img);
         }
       });
     }, {
-      rootMargin: '50px 0px',
+      rootMargin: '100px 0px', // Increased margin for earlier loading
       threshold: 0.01
     });
     
@@ -352,9 +373,20 @@ function lazyLoadImages() {
         img.src = img.dataset.src;
         img.removeAttribute('data-src');
         img.classList.add('loaded');
+        img.classList.remove('lazy-load');
       }
     });
   }
+}
+
+/**
+ * Helper to determine if an element is likely in the initial viewport
+ */
+function isInInitialViewport(el) {
+  const rect = el.getBoundingClientRect();
+  const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+  // Consider elements in roughly the first viewport as initially visible
+  return rect.top < windowHeight * 1.2;
 }
 
 /**
